@@ -3,6 +3,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import alias from './utils/alias';
 import App from '../App';
+import userEvent from '@testing-library/user-event';
 
 const { button } = alias;
 
@@ -26,4 +27,20 @@ test('countdown is being rendered', () => {
   countdownElements.forEach((element) => {
     expect(element).toBeInTheDocument();
   });
+});
+
+test('button options change the countdown', () => {
+  render(<App />);
+  const countdown = screen.getByTestId('countdown');
+  const timer = countdown.querySelector('.timer');
+  const timerFirstValue = timer.textContent;
+  const buttons = countdown.querySelectorAll('button');
+  
+  buttons.forEach((button) => {
+    userEvent.click(button);
+  });
+
+  const timerSecondValue = timer.textContent;
+
+  expect(timerFirstValue).not.toBe(timerSecondValue);
 });
