@@ -12,6 +12,9 @@ class Countdown extends React.Component {
 
     this.countdownTimeout = null;
 
+    this.shortInterval = this.shortInterval.bind(this);
+    this.regularInterval = this.regularInterval.bind(this);
+    this.longInterval = this.longInterval.bind(this);
     this.randomInterval = this.randomInterval.bind(this);
     this.startCountdown = this.startCountdown.bind(this);
   }
@@ -41,6 +44,24 @@ class Countdown extends React.Component {
     this.setState({ minutes, seconds });
   }
 
+  shortInterval() {
+    const time = 4 * 60;
+
+    this.setState({ time });
+  }
+
+  regularInterval() {
+    const time = 6 * 60;
+
+    this.setState({ time });
+  }
+
+  longInterval() {
+    const time = 10 * 60;
+
+    this.setState({ time });
+  }
+
   randomInterval() {
     const min = Math.ceil(30);
     const max = Math.floor(180);
@@ -65,9 +86,9 @@ class Countdown extends React.Component {
         </div>
   
         <div>
-          <button>Vamos rápido, já voltamos</button>
-          <button>Voltamos em breve</button>
-          <button>Só alegria</button>
+          <button onClick={this.shortInterval}>Vamos rápido, já voltamos</button>
+          <button onClick={this.regularInterval}>Voltamos em breve</button>
+          <button onClick={this.longInterval}>Só alegria</button>
           <button onClick={this.randomInterval}>Aleatório</button>
         </div>
       </div>
