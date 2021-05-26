@@ -1,8 +1,9 @@
 import React from 'react';
+import Countdown from './components/Countdown';
 
 function App() {
   return (
-    <h1>Hello, World</h1>
+    <Countdown />
   );
 }
 
