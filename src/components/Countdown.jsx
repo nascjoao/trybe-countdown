@@ -10,13 +10,27 @@ class Countdown extends React.Component {
       seconds: 0
     };
 
+    this.countdownTimeout = null;
+
     this.randomInterval = this.randomInterval.bind(this);
+    this.startCountdown = this.startCountdown.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.time !== this.state.time) {
       this.setMinutesAndSeconds();
+      if (this.state.time > 0) this.startCountdown();
     }
+  }
+
+  startCountdown() {
+    const { time } = this.state;
+    clearTimeout(this.countdownTimeout);
+    this.countdownTimeout = setTimeout(() => {
+      this.setState({
+        time: time - 1
+      });
+    }, 1000);
   }
 
   setMinutesAndSeconds() {
