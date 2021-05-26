@@ -7,11 +7,15 @@ class Countdown extends React.Component {
     this.state = {
       time: 0,
       minutes: 0,
-      seconds: 0
+      seconds: 0,
+      temporaryTime: '',
+      startCountdownDisabled: true,
     };
 
     this.countdownTimeout = null;
 
+    this.handleInputTime = this.handleInputTime.bind(this);
+    this.customInterval = this.customInterval.bind(this);
     this.shortInterval = this.shortInterval.bind(this);
     this.regularInterval = this.regularInterval.bind(this);
     this.longInterval = this.longInterval.bind(this);
@@ -24,6 +28,17 @@ class Countdown extends React.Component {
       this.setMinutesAndSeconds();
       if (this.state.time > 0) this.startCountdown();
     }
+  }
+
+  handleInputTime({ target }) {
+    const temporaryTime = target.value;
+
+    const timePattern = /^([1-5][0-9]|[1-9])m\s([1-5][0-9]|[1-9])+s$|^([1-5][0-9]|[1-9])(m|s)$/g;
+
+    this.setState({
+      temporaryTime: target.value,
+      startCountdownDisabled: !temporaryTime.match(timePattern),
+    });
   }
 
   startCountdown() {
@@ -42,6 +57,30 @@ class Countdown extends React.Component {
     const seconds = time % 60;
 
     this.setState({ minutes, seconds });
+  }
+
+  customInterval(event) {
+    event.preventDefault();
+
+    let { temporaryTime } = this.state;
+
+    temporaryTime = temporaryTime.split(/\s/);
+
+    let seconds = 0;
+
+    temporaryTime.forEach((unit) => {
+      if (unit.includes('m')) {
+        const temporaryMinutes = unit.replace('m', '');
+        const minutesInSeconds = Math.floor(temporaryMinutes * 60);
+        seconds += minutesInSeconds;
+      } else {
+        let temporarySeconds = unit.replace('s', '');
+        temporarySeconds = temporarySeconds % 60;
+        seconds += temporarySeconds;
+      }
+    });
+
+    this.setState({ time: seconds, temporaryTime: '' });
   }
 
   shortInterval() {
@@ -71,7 +110,7 @@ class Countdown extends React.Component {
   }
 
   render() {
-    const { minutes, seconds } = this.state;
+    const { minutes, seconds, startCountdownDisabled, temporaryTime } = this.state;
     const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0');
     const [secondLeft, secondRight] = String(seconds).padStart(2, '0');
 
@@ -84,8 +123,13 @@ class Countdown extends React.Component {
           <span className="secondLeft">{secondLeft}</span>
           <span className="secondRight">{secondRight}</span>
         </div>
+
+        <form onSubmit={this.customInterval}>
+          <input type="text" value={temporaryTime} placeholder="Ex.: 3m 25s" onChange={this.handleInputTime} />
+          <button type="submit" disabled={startCountdownDisabled}>Iniciar countdown</button>
+        </form>
   
-        <div>
+        <div className="options">
           <button onClick={this.shortInterval}>Vamos rápido, já voltamos</button>
           <button onClick={this.regularInterval}>Voltamos em breve</button>
           <button onClick={this.longInterval}>Só alegria</button>
