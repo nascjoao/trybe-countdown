@@ -8,6 +8,13 @@ function Countdown() {
       <span>:</span>
       <span className="secondLeft">0</span>
       <span className="secondRight">0</span>
+
+      <div>
+        <button>Vamos rápido, já voltamos</button>
+        <button>Voltamos em breve</button>
+        <button>Só alegria</button>
+        <button>Aleatório</button>
+      </div>
     </div>
   );
 }
