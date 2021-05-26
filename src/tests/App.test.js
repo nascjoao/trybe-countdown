@@ -38,9 +38,7 @@ test('button options change the countdown', () => {
   
   buttons.forEach((button) => {
     userEvent.click(button);
+    const timerSecondValue = timer.textContent;
+    expect(timerFirstValue).not.toBe(timerSecondValue);
   });
-
-  const timerSecondValue = timer.textContent;
-
-  expect(timerFirstValue).not.toBe(timerSecondValue);
 });
