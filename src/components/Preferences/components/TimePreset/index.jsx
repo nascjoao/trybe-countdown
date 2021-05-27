@@ -31,7 +31,9 @@ export default class TimePreset extends Component {
   handleInputTime({ target }) {
     const { convertCustomTimeToSeconds, setPreset } = timeFunctions;
     const temporaryTime = target.value;
-    const { name } = this.state;
+    const { name: nameInState } = this.state;
+    const { label } = this.props;
+    const name = nameInState || label;
 
     const timePattern = /^([1-5][0-9]|[1-9])m\s([1-5][0-9]|[1-9])+s$|^([1-5][0-9]|[1-9])(m|s)$/g;
 
@@ -66,7 +68,7 @@ export default class TimePreset extends Component {
     return (
       <label className="timePreset">
         {label}
-        <div className="currentTime">{currentTime}</div>
+        <div className="currentTime">{currentTime || '00:00'}</div>
         <input
           type="text"
           spellCheck={false}

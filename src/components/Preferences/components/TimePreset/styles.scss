@@ -1,5 +1,6 @@
 .timePreset {
   display: grid;
+  grid-template-rows: auto 3.5rem auto;
 
   .currentTime {
     font-size: 2.5rem;

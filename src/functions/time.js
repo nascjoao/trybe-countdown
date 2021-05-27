@@ -39,16 +39,27 @@ function setPreset(name, timeToUpdate) {
   const presets = JSON.parse(localStorage.getItem('presets'));
 
   if (presets) {
-    const updatedPresets = presets.map((preset) => {
-      const presetToUpdate = preset;
-      if (presetToUpdate.name === name) {
-        presetToUpdate.time = timeToUpdate;
-      }
-
-      return presetToUpdate;
-    });
+    const found = getPreset(name);
+    let updatedPresets = [];
+    if (found) {
+      updatedPresets = presets.map((preset) => {
+        const presetToUpdate = preset;
+        if (presetToUpdate.name === name) {
+          presetToUpdate.time = timeToUpdate;
+        }
+        
+        return presetToUpdate;
+      });
+    } else {
+      updatedPresets = [...presets, { name, time: timeToUpdate }];
+    }
     
     localStorage.setItem('presets', JSON.stringify(updatedPresets));
+  } else {
+    localStorage.setItem('presets', JSON.stringify([{
+      name,
+      time: timeToUpdate,
+    }]));
   }
 }
 
