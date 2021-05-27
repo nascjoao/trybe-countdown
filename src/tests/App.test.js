@@ -59,7 +59,7 @@ describe('Countdown', () => {
     expect(secondTimerValue).not.toBe(firstTimerValue);
   });
 
-  test('show message when countdown hits zero', async () => {
+  test('show message when countdown hits zero and user can go back', async () => {
     render(<App />);
 
     const message = screen.queryByTestId('countdown-end-message');
@@ -74,5 +74,12 @@ describe('Countdown', () => {
     await waitFor(() => expect(
       screen.getByTestId('countdown-end-message'),
     ).toBeInTheDocument(), { timeout: 2500 });
+    
+    const goBackButton = button({ name: 'Voltar' });
+    expect(goBackButton).toBeInTheDocument();
+    userEvent.click(goBackButton);
+    const countdown = screen.getByTestId('countdown');
+    expect(countdown).toBeInTheDocument();
+    expect(screen.getByTestId('countdown-end-message')).not.toBeInTheDocument();
   });
 });
