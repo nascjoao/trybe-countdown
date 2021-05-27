@@ -14,7 +14,7 @@ class Countdown extends React.Component {
   constructor() {
     super();
 
-    this.state = {
+    this.initialState = {
       time: 0,
       minutes: 0,
       seconds: 0,
@@ -22,7 +22,10 @@ class Countdown extends React.Component {
       startCountdownDisabled: true,
       countdownIsActive: false,
       countdownEnd: false,
+      countdownCanceled: false,
     };
+
+    this.state = this.initialState;
 
     this.countdownTimeout = null;
 
@@ -41,7 +44,7 @@ class Countdown extends React.Component {
     if (prevState.time !== this.state.time) {
       this.setMinutesAndSeconds();
       if (this.state.time > 0) this.startCountdown();
-      else this.setState({ countdownActive: false, countdownEnd: true });
+      else this.setState({ countdownIsActive: false, countdownEnd: true });
     }
   }
 
@@ -69,6 +72,7 @@ class Countdown extends React.Component {
     clearTimeout(this.countdownTimeout);
     this.countdownTimeout = setTimeout(() => {
       this.setState({
+        ...this.initialState,
         time: time - 1,
         countdownIsActive: true,
         countdownEnd: false,
@@ -78,7 +82,7 @@ class Countdown extends React.Component {
 
   cancelCountdown() {
     clearTimeout(this.countdownTimeout);
-    this.setState({ time: 0, countdownIsActive: false });
+    this.setState({ time: 0, countdownIsActive: false, countdownCanceled: true });
   }
 
   setMinutesAndSeconds() {
@@ -146,14 +150,15 @@ class Countdown extends React.Component {
       startCountdownDisabled,
       temporaryTime,
       countdownIsActive,
-      countdownEnd
+      countdownEnd,
+      countdownCanceled
     } = this.state;
     const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0');
     const [secondLeft, secondRight] = String(seconds).padStart(2, '0');
 
     return (
       <>
-        { countdownEnd ? (
+        { countdownEnd && !countdownCanceled ? (
           <div id="countdownEndMessage" data-testid="countdownEndMessage">
             <strong>Fim</strong>
             <button onClick={this.goBack}>Voltar</button>
