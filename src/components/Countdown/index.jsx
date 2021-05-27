@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles.scss';
 
 class Countdown extends React.Component {
   constructor() {
@@ -80,7 +81,7 @@ class Countdown extends React.Component {
       }
     });
 
-    this.setState({ time: seconds, temporaryTime: '' });
+    this.setState({ time: seconds, temporaryTime: '', startCountdownDisabled: true });
   }
 
   shortInterval() {
@@ -117,15 +118,19 @@ class Countdown extends React.Component {
     return (
       <div id="countdown" data-testid="countdown">
         <div className="timer">
-          <span className="minuteLeft">{minuteLeft}</span>
-          <span className="minuteRight">{minuteRight}</span>
+          <div className="minutes">
+            <span className="minuteLeft">{minuteLeft}</span>
+            <span className="minuteRight">{minuteRight}</span>
+          </div>
           <span>:</span>
-          <span className="secondLeft">{secondLeft}</span>
-          <span className="secondRight">{secondRight}</span>
+          <div className="seconds">
+            <span className="secondLeft">{secondLeft}</span>
+            <span className="secondRight">{secondRight}</span>
+          </div>
         </div>
 
-        <form onSubmit={this.customInterval}>
-          <input type="text" value={temporaryTime} placeholder="Ex.: 3m 25s" onChange={this.handleInputTime} />
+        <form className="customInterval" onSubmit={this.customInterval}>
+          <input type="text" value={temporaryTime} spellCheck={false} placeholder="Ex.: 3m 25s" onChange={this.handleInputTime} />
           <button type="submit" disabled={startCountdownDisabled}>Iniciar countdown</button>
         </form>
   

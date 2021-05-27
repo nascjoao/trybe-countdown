@@ -1,0 +1,104 @@
+#countdown {
+  align-content: center;
+  background: var(--background);
+  display: grid;
+  gap: 2.5rem;
+  height: 100vh;
+  justify-items: center;
+  position: absolute;
+  width: 100%;
+
+  .timer {
+    align-items: center;
+    display: flex;
+    font-weight: bold;
+    
+    span {
+      background: linear-gradient(125deg, var(--green) 30%, var(--dark-green) 80%);
+      color: var(--text);
+      display: inline-block;
+      font-size: 7.75rem;
+      height: 10.5625rem;
+      margin: .1rem;
+      text-align: center;
+      text-shadow: 0 0 50px rgba(0, 0, 0, 0.7);
+      width: 7.625rem;
+    }
+
+    .minutes {
+      span {
+        &:first-child {
+          border-radius: 15px 0 0 15px;
+        }
+        
+        &:last-child {
+          border-radius: 0 15px 15px 0;
+        }
+      }
+    }
+    
+    .seconds {
+      span {
+        &:first-child {
+          border-radius: 15px 0 0 15px;
+        }
+        
+        &:last-child {
+          border-radius: 0 15px 15px 0;
+        }
+      }
+    }
+
+
+    & > span {
+      background: none;
+      color: var(--dark-green);
+      font-size: 7.75rem;
+      margin: 0;
+      width: auto;
+      height: auto;
+    }
+  }
+
+  .customInterval {
+    display: flex;
+    margin: 0 auto;
+    max-width: 33.9375rem;
+    width: 100%;
+
+    input {
+      background: var(--background-secondary);
+      border: 2px solid var(--dark-green);
+      border-right: 0;
+      border-radius: 5px 0 0 5px;
+      color: var(--dark-green);
+      flex: 1;
+      font-size: 1.1875rem;
+      outline-color: var(--green);
+      outline-offset: -1px;
+      padding: 0 1.25rem;
+      height: 100%;
+    }
+
+    button {
+      border-radius: 0 5px 5px 0;
+
+      &:disabled {
+        cursor: not-allowed;
+        filter: saturate(.3);
+        opacity: .5;
+      }
+
+      &:disabled:hover {
+        animation: denial .1s .5s forwards;
+        transform: scale(1);
+      }
+    }
+  }
+
+  .options {
+    button {
+      margin: 0 .9375rem;
+    }
+  }
+}
