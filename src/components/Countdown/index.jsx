@@ -50,7 +50,7 @@ class Countdown extends React.Component {
   }
 
   goBack() {
-    this.setState({ countdownEnd: false });
+    this.setState({ countdownEnd: false, countdownIsActive: false });
   }
 
   handleInputTime({ target }) {
@@ -154,7 +154,7 @@ class Countdown extends React.Component {
     return (
       <>
         { countdownEnd ? (
-          <div data-testid="countdownEndMessage">
+          <div id="countdownEndMessage" data-testid="countdownEndMessage">
             <strong>Fim</strong>
             <button onClick={this.goBack}>Voltar</button>
           </div>
