@@ -1,5 +1,6 @@
 import React from 'react';
 import { MdClose, MdMenu } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 import './styles.scss';
 
@@ -43,8 +44,12 @@ class Menu extends React.Component {
         { menu && (
           <nav id="menu" className={`menuOut-${menuOut}`}>
             <ul>
-              <li>Preferências</li>
-              <li>Sobre</li>
+              <li>
+                <Link to="/settings">Preferências</Link>
+              </li>
+              <li>
+                <Link to="/about">Sobre</Link>
+              </li>
             </ul>
           </nav>
         ) }

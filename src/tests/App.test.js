@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
+import renderWithRouter from './utils/renderWithRouter';
 import alias from './utils/alias';
 import App from '../App';
 import userEvent from '@testing-library/user-event';
@@ -9,7 +10,7 @@ const { button } = alias;
 
 describe('Countdown', () => {
   test('countdown is being rendered', () => {
-    render(<App />);
+    renderWithRouter(<App />);
     const countdown = screen.getByTestId('countdown');
   
     const countdownElements = [
@@ -31,7 +32,7 @@ describe('Countdown', () => {
   });
   
   test('button options change the countdown', () => {
-    render(<App />);
+    renderWithRouter(<App />);
     const countdown = screen.getByTestId('countdown');
     const timer = countdown.querySelector('.timer');
     const timerFirstValue = timer.textContent;
@@ -45,7 +46,7 @@ describe('Countdown', () => {
   });
   
   test('user can type custom time', () => {
-    render(<App />);
+    renderWithRouter(<App />);
     const countdown = screen.getByTestId('countdown');
     const firstTimerValue = countdown.querySelector('.timer').textContent;
     const inputCustomTimer = screen.getByPlaceholderText('Ex.: 3m 25s');
@@ -60,7 +61,7 @@ describe('Countdown', () => {
   });
 
   test('show message when countdown hits zero and user can go back', async () => {
-    render(<App />);
+    renderWithRouter(<App />);
 
     const message = screen.queryByTestId('countdownEndMessage');
     expect(message).not.toBeInTheDocument();

@@ -34,7 +34,6 @@
   background: var(--background-secondary);
   border-radius: 0 15px 15px 0;
   box-shadow: 0 0 50px -20px var(--green);
-  color: var(--dark-green);
   font-size: 1.5rem;
   font-weight: bold;
   padding: 2.5rem;
@@ -51,6 +50,10 @@
 
     & + li {
       border-top: 1px solid var(--green);
+    }
+
+    a {
+      color: var(--dark-green);
     }
   }
 
