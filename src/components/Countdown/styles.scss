@@ -109,4 +109,27 @@
       margin: 0 .9375rem;
     }
   }
+
+  #countdownEndMessage {
+    align-content: center;
+    animation: scaleIn .4s forwards;
+    background: rgba(0, 0, 0, 0.9);
+    color: var(--text);
+    display: grid;
+    gap: 2.5rem;
+    height: 100%;
+    justify-items: center;
+    position: absolute;
+    width: 100%;
+
+    strong {
+      font-size: 3.25rem;
+      text-align: center;
+
+      .tada {
+        font-size: 5.625rem;
+        margin-bottom: .625rem;
+      }
+    }
+  }
 }

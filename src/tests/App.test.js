@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import alias from './utils/alias';
 import App from '../App';
 import userEvent from '@testing-library/user-event';
@@ -57,5 +57,29 @@ describe('Countdown', () => {
     userEvent.click(btnStartCountdown);
     const secondTimerValue = countdown.querySelector('.timer').textContent;
     expect(secondTimerValue).not.toBe(firstTimerValue);
+  });
+
+  test('show message when countdown hits zero and user can go back', async () => {
+    render(<App />);
+
+    const message = screen.queryByTestId('countdownEndMessage');
+    expect(message).not.toBeInTheDocument();
+
+    const inputCustomTimer = screen.getByPlaceholderText('Ex.: 3m 25s');
+    userEvent.type(inputCustomTimer, '2s');
+    const startButton = button({ name: 'Iniciar countdown' });
+    expect(startButton).toBeEnabled();
+    userEvent.click(startButton);
+
+    await waitFor(() => expect(
+      screen.getByTestId('countdownEndMessage'),
+    ).toBeInTheDocument(), { timeout: 2500 });
+    
+    const goBackButton = button({ name: 'Voltar' });
+    expect(goBackButton).toBeInTheDocument();
+    userEvent.click(goBackButton);
+    const countdown = screen.getByTestId('countdown');
+    expect(countdown).toBeInTheDocument();
+    expect(screen.queryByTestId('countdownEndMessage')).not.toBeInTheDocument();
   });
 });

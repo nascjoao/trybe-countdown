@@ -14,17 +14,22 @@ class Countdown extends React.Component {
   constructor() {
     super();
 
-    this.state = {
+    this.initialState = {
       time: 0,
       minutes: 0,
       seconds: 0,
       temporaryTime: '',
       startCountdownDisabled: true,
       countdownIsActive: false,
+      countdownEnd: false,
+      countdownCanceled: false,
     };
+
+    this.state = this.initialState;
 
     this.countdownTimeout = null;
 
+    this.goBack = this.goBack.bind(this);
     this.handleInputTime = this.handleInputTime.bind(this);
     this.customInterval = this.customInterval.bind(this);
     this.shortInterval = this.shortInterval.bind(this);
@@ -39,8 +44,19 @@ class Countdown extends React.Component {
     if (prevState.time !== this.state.time) {
       this.setMinutesAndSeconds();
       if (this.state.time > 0) this.startCountdown();
-      else this.setState({ countdownActive: false });
+      else if (!this.state.countdownCanceled) {
+        this.setState({ countdownIsActive: false, countdownEnd: true });
+        new Audio('notification.mp3').play();
+      }
     }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.countdownTimeout);
+  }
+
+  goBack() {
+    this.setState({ countdownEnd: false, countdownIsActive: false });
   }
 
   handleInputTime({ target }) {
@@ -59,15 +75,17 @@ class Countdown extends React.Component {
     clearTimeout(this.countdownTimeout);
     this.countdownTimeout = setTimeout(() => {
       this.setState({
+        ...this.initialState,
         time: time - 1,
         countdownIsActive: true,
+        countdownEnd: false,
       });
     }, 1000);
   }
 
   cancelCountdown() {
     clearTimeout(this.countdownTimeout);
-    this.setState({ time: 0, countdownIsActive: false });
+    this.setState({ time: 0, countdownIsActive: false, countdownCanceled: true });
   }
 
   setMinutesAndSeconds() {
@@ -99,25 +117,30 @@ class Countdown extends React.Component {
       }
     });
 
-    this.setState({ time: seconds, temporaryTime: '', startCountdownDisabled: true });
+    this.setState({
+      time: seconds,
+      temporaryTime: '',
+      startCountdownDisabled: true,
+      countdownIsActive: true
+    });
   }
 
   shortInterval() {
     const time = 4 * 60;
 
-    this.setState({ time });
+    this.setState({ time, countdownIsActive: true });
   }
 
   regularInterval() {
     const time = 6 * 60;
 
-    this.setState({ time });
+    this.setState({ time, countdownIsActive: true });
   }
 
   longInterval() {
     const time = 10 * 60;
 
-    this.setState({ time });
+    this.setState({ time, countdownIsActive: true });
   }
 
   randomInterval() {
@@ -125,11 +148,19 @@ class Countdown extends React.Component {
     const max = Math.floor(180);
     const time = Math.floor(Math.random() * (max - min + 1) + min);
 
-    this.setState({ time });
+    this.setState({ time, countdownIsActive: true });
   }
 
   render() {
-    const { minutes, seconds, startCountdownDisabled, temporaryTime, countdownIsActive } = this.state;
+    const {
+      minutes,
+      seconds,
+      startCountdownDisabled,
+      temporaryTime,
+      countdownIsActive,
+      countdownEnd,
+      countdownCanceled
+    } = this.state;
     const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0');
     const [secondLeft, secondRight] = String(seconds).padStart(2, '0');
 
@@ -149,7 +180,7 @@ class Countdown extends React.Component {
         { countdownIsActive ? (
           <button onClick={this.cancelCountdown}>
             <MdTimerOff />
-            Cancelar countdown
+              Cancelar countdown
           </button>
         ) : (
           <>
@@ -157,29 +188,35 @@ class Countdown extends React.Component {
               <input type="text" value={temporaryTime} spellCheck={false} placeholder="Ex.: 3m 25s" onChange={this.handleInputTime} />
               <button type="submit" disabled={startCountdownDisabled}>
                 <MdTimer />
-                Iniciar countdown
+                  Iniciar countdown
               </button>
             </form>
-      
+        
             <div className="options">
               <button onClick={this.shortInterval}>
                 <MdDirectionsRun />
-                Vamos rápido, já voltamos
+                  Vamos rápido, já voltamos
               </button>
               <button onClick={this.regularInterval}>
                 <MdFreeBreakfast />
-                Voltamos em breve
+                  Voltamos em breve
               </button>
               <button onClick={this.longInterval}>
                 <MdSentimentSatisfied />
-                Só alegria
+                  Só alegria
               </button>
               <button onClick={this.randomInterval}>
                 <MdCasino />
-                Aleatório
+                  Aleatório
               </button>
             </div>
           </>
+        ) }
+        { (countdownEnd && !countdownCanceled) && (
+          <div id="countdownEndMessage" data-testid="countdownEndMessage">
+            <strong><div className="tada">🎉️</div>Tempo finalizado!</strong>
+            <button onClick={this.goBack}>Voltar</button>
+          </div>
         ) }
       </div>
     );
