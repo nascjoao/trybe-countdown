@@ -15,7 +15,7 @@
     
     span {
       background: linear-gradient(125deg, var(--green) 30%, var(--dark-green) 80%);
-      color: var(--text);
+      color: var(--text-secondary);
       display: inline-block;
       font-size: 7.75rem;
       height: 10.5625rem;
@@ -71,7 +71,7 @@
       border: 2px solid var(--dark-green);
       border-right: 0;
       border-radius: 5px 0 0 5px;
-      color: var(--dark-green);
+      color: var(--text);
       flex: 1;
       font-size: 1.1875rem;
       outline-color: var(--dark-green);
@@ -114,7 +114,7 @@
     align-content: center;
     animation: scaleIn .4s forwards;
     background: rgba(0, 0, 0, 0.9);
-    color: var(--text);
+    color: var(--text-secondary);
     display: grid;
     gap: 2.5rem;
     height: 100%;

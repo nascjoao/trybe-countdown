@@ -1,0 +1,35 @@
+label, p {
+  font-size: 1.14rem;
+}
+
+header {
+  background: var(--background-secondary);
+  padding: 1.5625rem;
+
+  a {
+    color: var(--text);
+  }
+}
+
+main {
+  padding: 4rem;
+  
+  h3 {
+    align-items: center;
+    border-bottom: 1px solid var(--green);
+    display: flex;
+    margin-bottom: 2rem;
+    margin-top: 4rem;
+    padding-bottom: 1rem;
+
+    svg {
+      margin-right: .9375rem;
+    }
+  }
+
+  #presets {
+    display: grid;
+    gap: 4.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(16.25rem, 1fr));
+  }
+}

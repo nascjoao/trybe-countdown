@@ -1,6 +1,16 @@
 :root {
   --background: linear-gradient(#0e6d45 -200%, #f7f7f7);
   --background-secondary: #f7f7f7;
+  --text-secondary: #e0fff2;
+  --text: #36463f;
+  --green: #0aac68;
+  --dark-green: #0e6d45;
+}
+
+[data-theme="dark"] {
+  --background: linear-gradient(#0e6d45 -200%, #222);
+  --background-secondary: #222;
+  --text-secondary: #e0fff2;
   --text: #e0fff2;
   --green: #0aac68;
   --dark-green: #0e6d45;
@@ -23,13 +33,19 @@
   text-decoration: none;
 }
 
+#App {
+  background: var(--background);
+  color: var(--text);
+  min-height: 100vh;
+}
+
 button {
   align-items: center;
   background: linear-gradient(var(--green), var(--dark-green));
   border: 2px solid var(--dark-green);
   border-radius: 5px;
   box-shadow: inset 0 2px rgba(255, 255, 255, 0.2), inset 0 -2px 5px var(--dark-green);
-  color: var(--text);
+  color: var(--text-secondary);
   cursor: pointer;
   display: inline-flex;
   font-size: .875rem;
@@ -47,13 +63,19 @@ button {
   }
 }
 
+#toggleTheme {
+  background: none;
+  border: none;
+  box-shadow: none;
+  margin: 1.5625rem;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-  --background: linear-gradient(#0e6d45 -200%, #222);
-  --background-secondary: #222;
-  --text: #e0fff2;
-  --green: #0aac68;
-  --dark-green: #0e6d45;
+  svg {
+    color: var(--dark-green);
+    margin: 0;
   }
 }
