@@ -18,6 +18,14 @@
   }
 }
 
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+  } to {
+    transform: scale(1);
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -27,15 +35,23 @@
 }
 
 button {
+  align-items: center;
   background: linear-gradient(var(--green), var(--dark-green));
   border: 2px solid var(--dark-green);
   border-radius: 5px;
   box-shadow: inset 0 2px rgba(255, 255, 255, 0.2), inset 0 -2px 5px var(--dark-green);
   color: var(--text);
   cursor: pointer;
+  display: inline-flex;
+  font-size: .875rem;
   font-weight: bold;
   transition: .1s;
   padding: .625rem 1.25rem;
+
+  svg {
+    font-size: 1.375rem;
+    margin-right: .5rem;
+  }
 
   &:hover {
     transform: scale(1.05);
