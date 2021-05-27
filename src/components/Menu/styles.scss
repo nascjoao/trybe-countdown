@@ -1,0 +1,57 @@
+#toggleMenu {
+  background: none;
+  border: none;
+  box-shadow: none;
+  color: var(--dark-green);
+  margin: 1.5625rem;
+  padding: 0;
+  position: absolute;
+  z-index: 2;
+  svg {
+    font-size: 2.5rem;
+    margin: 0;
+  }
+}
+
+@keyframes menuIn {
+  from {
+    transform: translateX(-100%) translateY(-50%);
+  } to {
+    transform: translateX(0) translateY(-50%);
+  }
+}
+
+@keyframes menuOut {
+  from {
+    transform: translateX(0) translateY(-50%);
+  } to {
+    transform: translateX(-100%) translateY(-50%);
+  }
+}
+
+#menu {
+  animation: menuIn .4s forwards;
+  background: var(--background-secondary);
+  border-radius: 0 15px 15px 0;
+  box-shadow: 0 0 50px -20px var(--green);
+  color: var(--dark-green);
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 2.5rem;
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+
+  &.menuOut-true {
+    animation: menuOut .2s forwards;
+  }
+
+  li {
+    padding: 1rem 0;
+
+    & + li {
+      border-top: 1px solid var(--green);
+    }
+  }
+
+}

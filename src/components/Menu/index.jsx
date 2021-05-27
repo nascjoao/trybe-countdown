@@ -1,27 +1,39 @@
 import React from 'react';
 import { MdClose, MdMenu } from 'react-icons/md';
 
+import './styles.scss';
+
 class Menu extends React.Component {
   constructor() {
     super();
 
     this.state = {
       menu: false,
+      menuOut: true,
     };
+
+    this.menuTimeout = null;
 
     this.toggleMenu = this.toggleMenu.bind(this);
   }
 
   toggleMenu() {
-    const { menu } = this.state;
-    this.setState({ menu: !menu });
+    const { menu, menuOut } = this.state;
+    this.setState({ menuOut: !menuOut });
+    this.menuTimeout = setTimeout(() => {
+      this.setState({ menu: !menu });
+    }, 200);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.menuTimeout);
   }
 
   render() {
-    const { menu } = this.state;
+    const { menu, menuOut } = this.state;
     return (
       <>
-        <button onClick={this.toggleMenu}>
+        <button id="toggleMenu" onClick={this.toggleMenu}>
           { menu ? (
             <MdClose />
           ) : (
@@ -29,7 +41,7 @@ class Menu extends React.Component {
           ) }
         </button>
         { menu && (
-          <nav id="menu">
+          <nav id="menu" className={`menuOut-${menuOut}`}>
             <ul>
               <li>Preferências</li>
               <li>Sobre</li>
