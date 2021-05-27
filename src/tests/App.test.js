@@ -62,7 +62,7 @@ describe('Countdown', () => {
   test('show message when countdown hits zero and user can go back', async () => {
     render(<App />);
 
-    const message = screen.queryByTestId('countdown-end-message');
+    const message = screen.queryByTestId('countdownEndMessage');
     expect(message).not.toBeInTheDocument();
 
     const inputCustomTimer = screen.getByPlaceholderText('Ex.: 3m 25s');
@@ -72,7 +72,7 @@ describe('Countdown', () => {
     userEvent.click(startButton);
 
     await waitFor(() => expect(
-      screen.getByTestId('countdown-end-message'),
+      screen.getByTestId('countdownEndMessage'),
     ).toBeInTheDocument(), { timeout: 2500 });
     
     const goBackButton = button({ name: 'Voltar' });
@@ -80,6 +80,6 @@ describe('Countdown', () => {
     userEvent.click(goBackButton);
     const countdown = screen.getByTestId('countdown');
     expect(countdown).toBeInTheDocument();
-    expect(screen.getByTestId('countdown-end-message')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('countdownEndMessage')).not.toBeInTheDocument();
   });
 });

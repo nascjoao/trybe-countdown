@@ -26,6 +26,7 @@ class Countdown extends React.Component {
 
     this.countdownTimeout = null;
 
+    this.goBack = this.goBack.bind(this);
     this.handleInputTime = this.handleInputTime.bind(this);
     this.customInterval = this.customInterval.bind(this);
     this.shortInterval = this.shortInterval.bind(this);
@@ -46,6 +47,10 @@ class Countdown extends React.Component {
 
   componentWillUnmount() {
     clearTimeout(this.countdownTimeout);
+  }
+
+  goBack() {
+    this.setState({ countdownEnd: false });
   }
 
   handleInputTime({ target }) {
@@ -149,9 +154,9 @@ class Countdown extends React.Component {
     return (
       <>
         { countdownEnd ? (
-          <div data-testid="countdown-end-message">
+          <div data-testid="countdownEndMessage">
             <strong>Fim</strong>
-            <button>Voltar</button>
+            <button onClick={this.goBack}>Voltar</button>
           </div>
         ) : (
           <div id="countdown" data-testid="countdown">
