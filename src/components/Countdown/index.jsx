@@ -1,4 +1,14 @@
 import React from 'react';
+import './styles.scss';
+
+import {
+  MdCasino,
+  MdDirectionsRun,
+  MdFreeBreakfast,
+  MdSentimentSatisfied,
+  MdTimer,
+  MdTimerOff
+} from 'react-icons/md';
 
 class Countdown extends React.Component {
   constructor() {
@@ -10,6 +20,7 @@ class Countdown extends React.Component {
       seconds: 0,
       temporaryTime: '',
       startCountdownDisabled: true,
+      countdownIsActive: false,
     };
 
     this.countdownTimeout = null;
@@ -21,12 +32,14 @@ class Countdown extends React.Component {
     this.longInterval = this.longInterval.bind(this);
     this.randomInterval = this.randomInterval.bind(this);
     this.startCountdown = this.startCountdown.bind(this);
+    this.cancelCountdown = this.cancelCountdown.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.time !== this.state.time) {
       this.setMinutesAndSeconds();
       if (this.state.time > 0) this.startCountdown();
+      else this.setState({ countdownActive: false });
     }
   }
 
@@ -46,9 +59,15 @@ class Countdown extends React.Component {
     clearTimeout(this.countdownTimeout);
     this.countdownTimeout = setTimeout(() => {
       this.setState({
-        time: time - 1
+        time: time - 1,
+        countdownIsActive: true,
       });
     }, 1000);
+  }
+
+  cancelCountdown() {
+    clearTimeout(this.countdownTimeout);
+    this.setState({ time: 0, countdownIsActive: false });
   }
 
   setMinutesAndSeconds() {
@@ -80,7 +99,7 @@ class Countdown extends React.Component {
       }
     });
 
-    this.setState({ time: seconds, temporaryTime: '' });
+    this.setState({ time: seconds, temporaryTime: '', startCountdownDisabled: true });
   }
 
   shortInterval() {
@@ -110,31 +129,58 @@ class Countdown extends React.Component {
   }
 
   render() {
-    const { minutes, seconds, startCountdownDisabled, temporaryTime } = this.state;
+    const { minutes, seconds, startCountdownDisabled, temporaryTime, countdownIsActive } = this.state;
     const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0');
     const [secondLeft, secondRight] = String(seconds).padStart(2, '0');
 
     return (
       <div id="countdown" data-testid="countdown">
         <div className="timer">
-          <span className="minuteLeft">{minuteLeft}</span>
-          <span className="minuteRight">{minuteRight}</span>
+          <div className="minutes">
+            <span className="minuteLeft">{minuteLeft}</span>
+            <span className="minuteRight">{minuteRight}</span>
+          </div>
           <span>:</span>
-          <span className="secondLeft">{secondLeft}</span>
-          <span className="secondRight">{secondRight}</span>
+          <div className="seconds">
+            <span className="secondLeft">{secondLeft}</span>
+            <span className="secondRight">{secondRight}</span>
+          </div>
         </div>
-
-        <form onSubmit={this.customInterval}>
-          <input type="text" value={temporaryTime} placeholder="Ex.: 3m 25s" onChange={this.handleInputTime} />
-          <button type="submit" disabled={startCountdownDisabled}>Iniciar countdown</button>
-        </form>
-  
-        <div className="options">
-          <button onClick={this.shortInterval}>Vamos rápido, já voltamos</button>
-          <button onClick={this.regularInterval}>Voltamos em breve</button>
-          <button onClick={this.longInterval}>Só alegria</button>
-          <button onClick={this.randomInterval}>Aleatório</button>
-        </div>
+        { countdownIsActive ? (
+          <button onClick={this.cancelCountdown}>
+            <MdTimerOff />
+            Cancelar countdown
+          </button>
+        ) : (
+          <>
+            <form className="customInterval" onSubmit={this.customInterval}>
+              <input type="text" value={temporaryTime} spellCheck={false} placeholder="Ex.: 3m 25s" onChange={this.handleInputTime} />
+              <button type="submit" disabled={startCountdownDisabled}>
+                <MdTimer />
+                Iniciar countdown
+              </button>
+            </form>
+      
+            <div className="options">
+              <button onClick={this.shortInterval}>
+                <MdDirectionsRun />
+                Vamos rápido, já voltamos
+              </button>
+              <button onClick={this.regularInterval}>
+                <MdFreeBreakfast />
+                Voltamos em breve
+              </button>
+              <button onClick={this.longInterval}>
+                <MdSentimentSatisfied />
+                Só alegria
+              </button>
+              <button onClick={this.randomInterval}>
+                <MdCasino />
+                Aleatório
+              </button>
+            </div>
+          </>
+        ) }
       </div>
     );
   }
