@@ -211,7 +211,7 @@ class Countdown extends React.Component {
         ) }
         { (countdownEnd && !countdownCanceled) && (
           <div id="countdownEndMessage" data-testid="countdownEndMessage">
-            <strong>Fim</strong>
+            <strong><div className="tada">🎉️</div>Tempo finalizado!</strong>
             <button onClick={this.goBack}>Voltar</button>
           </div>
         ) }
