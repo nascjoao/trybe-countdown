@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import alias from './utils/alias';
 import App from '../App';
 import userEvent from '@testing-library/user-event';
@@ -57,5 +57,22 @@ describe('Countdown', () => {
     userEvent.click(btnStartCountdown);
     const secondTimerValue = countdown.querySelector('.timer').textContent;
     expect(secondTimerValue).not.toBe(firstTimerValue);
+  });
+
+  test('show message when countdown hits zero', async () => {
+    render(<App />);
+
+    const message = screen.queryByTestId('countdown-end-message');
+    expect(message).not.toBeInTheDocument();
+
+    const inputCustomTimer = screen.getByPlaceholderText('Ex.: 3m 25s');
+    userEvent.type(inputCustomTimer, '2s');
+    const startButton = button({ name: 'Iniciar countdown' });
+    expect(startButton).toBeEnabled();
+    userEvent.click(startButton);
+
+    await waitFor(() => expect(
+      screen.getByTestId('countdown-end-message'),
+    ).toBeInTheDocument(), { timeout: 2500 });
   });
 });
