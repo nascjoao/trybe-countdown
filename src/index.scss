@@ -6,6 +6,14 @@
   --dark-green: #0e6d45;
 }
 
+[data-theme="dark"] {
+  --background: linear-gradient(#0e6d45 -200%, #222);
+  --background-secondary: #222;
+  --text: #e0fff2;
+  --green: #0aac68;
+  --dark-green: #0e6d45;
+}
+
 @keyframes scaleIn {
   from {
     transform: scale(0);
@@ -47,13 +55,19 @@ button {
   }
 }
 
+#toggleTheme {
+  background: none;
+  border: none;
+  box-shadow: none;
+  margin: 1.5625rem;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-  --background: linear-gradient(#0e6d45 -200%, #222);
-  --background-secondary: #222;
-  --text: #e0fff2;
-  --green: #0aac68;
-  --dark-green: #0e6d45;
+  svg {
+    color: var(--dark-green);
+    margin: 0;
   }
 }
