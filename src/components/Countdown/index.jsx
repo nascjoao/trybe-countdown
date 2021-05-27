@@ -99,27 +99,14 @@ class Countdown extends React.Component {
 
   customInterval(event) {
     event.preventDefault();
+    const { convertCustomTimeToSeconds } = timeFunctions;
 
     let { temporaryTime } = this.state;
 
-    temporaryTime = temporaryTime.split(/\s/);
-
-    let seconds = 0;
-
-    temporaryTime.forEach((unit) => {
-      if (unit.includes('m')) {
-        const temporaryMinutes = unit.replace('m', '');
-        const minutesInSeconds = Math.floor(temporaryMinutes * 60);
-        seconds += minutesInSeconds;
-      } else {
-        let temporarySeconds = unit.replace('s', '');
-        temporarySeconds = temporarySeconds % 60;
-        seconds += temporarySeconds;
-      }
-    });
+    const time = convertCustomTimeToSeconds(temporaryTime);
 
     this.setState({
-      time: seconds,
+      time,
       temporaryTime: '',
       startCountdownDisabled: true,
       countdownIsActive: true

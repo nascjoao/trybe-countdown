@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import TimePreset from './components/TimePreset';
+import { MdInfoOutline } from 'react-icons/md';
 
 import './styles.scss';
 
@@ -21,11 +22,20 @@ class Preferences extends React.Component {
         <main>
           <h1>Preferências</h1>
           <h3>Padrões de tempo</h3>
-          <form>
+          <div id="presets">
             <TimePreset label="Vamos rápido, já voltamos" />
             <TimePreset label="Voltamos em breve" />
             <TimePreset label="Só alegria" />
-          </form>
+          </div>
+          <h3>
+            <MdInfoOutline />
+            Aleatório
+          </h3>
+          <p>
+            A opção de countdown aleatório cria um intervalo entre o seu mais curto
+            e mais longo padrão, ou seja, seus padrões de &quot;Vamos rápido, já voltamos&quot; e
+            &quot;Só alegria&quot;.
+          </p>
         </main>
       </div>
     );
