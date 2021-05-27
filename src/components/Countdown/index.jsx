@@ -114,25 +114,30 @@ class Countdown extends React.Component {
       }
     });
 
-    this.setState({ time: seconds, temporaryTime: '', startCountdownDisabled: true });
+    this.setState({
+      time: seconds,
+      temporaryTime: '',
+      startCountdownDisabled: true,
+      countdownIsActive: true
+    });
   }
 
   shortInterval() {
     const time = 4 * 60;
 
-    this.setState({ time });
+    this.setState({ time, countdownIsActive: true });
   }
 
   regularInterval() {
     const time = 6 * 60;
 
-    this.setState({ time });
+    this.setState({ time, countdownIsActive: true });
   }
 
   longInterval() {
     const time = 10 * 60;
 
-    this.setState({ time });
+    this.setState({ time, countdownIsActive: true });
   }
 
   randomInterval() {
@@ -140,7 +145,7 @@ class Countdown extends React.Component {
     const max = Math.floor(180);
     const time = Math.floor(Math.random() * (max - min + 1) + min);
 
-    this.setState({ time });
+    this.setState({ time, countdownIsActive: true });
   }
 
   render() {
@@ -157,63 +162,60 @@ class Countdown extends React.Component {
     const [secondLeft, secondRight] = String(seconds).padStart(2, '0');
 
     return (
-      <>
-        { countdownEnd && !countdownCanceled ? (
+      <div id="countdown" data-testid="countdown">
+        <div className="timer">
+          <div className="minutes">
+            <span className="minuteLeft">{minuteLeft}</span>
+            <span className="minuteRight">{minuteRight}</span>
+          </div>
+          <span>:</span>
+          <div className="seconds">
+            <span className="secondLeft">{secondLeft}</span>
+            <span className="secondRight">{secondRight}</span>
+          </div>
+        </div>
+        { countdownIsActive ? (
+          <button onClick={this.cancelCountdown}>
+            <MdTimerOff />
+              Cancelar countdown
+          </button>
+        ) : (
+          <>
+            <form className="customInterval" onSubmit={this.customInterval}>
+              <input type="text" value={temporaryTime} spellCheck={false} placeholder="Ex.: 3m 25s" onChange={this.handleInputTime} />
+              <button type="submit" disabled={startCountdownDisabled}>
+                <MdTimer />
+                  Iniciar countdown
+              </button>
+            </form>
+        
+            <div className="options">
+              <button onClick={this.shortInterval}>
+                <MdDirectionsRun />
+                  Vamos rápido, já voltamos
+              </button>
+              <button onClick={this.regularInterval}>
+                <MdFreeBreakfast />
+                  Voltamos em breve
+              </button>
+              <button onClick={this.longInterval}>
+                <MdSentimentSatisfied />
+                  Só alegria
+              </button>
+              <button onClick={this.randomInterval}>
+                <MdCasino />
+                  Aleatório
+              </button>
+            </div>
+          </>
+        ) }
+        { (countdownEnd && !countdownCanceled) && (
           <div id="countdownEndMessage" data-testid="countdownEndMessage">
             <strong>Fim</strong>
             <button onClick={this.goBack}>Voltar</button>
           </div>
-        ) : (
-          <div id="countdown" data-testid="countdown">
-            <div className="timer">
-              <div className="minutes">
-                <span className="minuteLeft">{minuteLeft}</span>
-                <span className="minuteRight">{minuteRight}</span>
-              </div>
-              <span>:</span>
-              <div className="seconds">
-                <span className="secondLeft">{secondLeft}</span>
-                <span className="secondRight">{secondRight}</span>
-              </div>
-            </div>
-            { countdownIsActive ? (
-              <button onClick={this.cancelCountdown}>
-                <MdTimerOff />
-              Cancelar countdown
-              </button>
-            ) : (
-              <>
-                <form className="customInterval" onSubmit={this.customInterval}>
-                  <input type="text" value={temporaryTime} spellCheck={false} placeholder="Ex.: 3m 25s" onChange={this.handleInputTime} />
-                  <button type="submit" disabled={startCountdownDisabled}>
-                    <MdTimer />
-                  Iniciar countdown
-                  </button>
-                </form>
-        
-                <div className="options">
-                  <button onClick={this.shortInterval}>
-                    <MdDirectionsRun />
-                  Vamos rápido, já voltamos
-                  </button>
-                  <button onClick={this.regularInterval}>
-                    <MdFreeBreakfast />
-                  Voltamos em breve
-                  </button>
-                  <button onClick={this.longInterval}>
-                    <MdSentimentSatisfied />
-                  Só alegria
-                  </button>
-                  <button onClick={this.randomInterval}>
-                    <MdCasino />
-                  Aleatório
-                  </button>
-                </div>
-              </>
-            ) }
-          </div>
         ) }
-      </>
+      </div>
     );
   }
 }
