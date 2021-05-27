@@ -1,0 +1,30 @@
+.timePreset {
+  display: grid;
+
+  .currentTime {
+    font-size: 2.5rem;
+  }
+
+  input {
+    background: var(--background-secondary);
+    border: 2px solid var(--dark-green);
+    border-radius: 5px;
+    color: var(--text);
+    flex: 1;
+    font-size: 1.1875rem;
+    outline-color: var(--dark-green);
+    outline-offset: -1px;
+    padding: .5rem 1.25rem;
+    height: 100%;
+    
+    &.isValueValid-true {
+      border: 2px solid var(--green);
+      outline-color: var(--green);
+    }
+    
+    &.isValueValid-false {
+      border: 2px solid #bd3440;
+      outline-color: #bd3440;
+    }
+  }
+}

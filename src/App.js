@@ -47,7 +47,7 @@ class App extends React.Component {
   render() {
     const { theme } = this.state;
     return (
-      <div data-theme={theme}>
+      <div id="App" data-theme={theme}>
         <Switch>
           <Route path="/about" component={About} />
           <Route path="/settings" component={Preferences} />

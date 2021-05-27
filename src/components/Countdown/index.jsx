@@ -1,4 +1,5 @@
 import React from 'react';
+import timeFunctions from '../../functions/time';
 import './styles.scss';
 
 import {
@@ -90,8 +91,8 @@ class Countdown extends React.Component {
 
   setMinutesAndSeconds() {
     const { time } = this.state;
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
+    const { convertTimeToMinutesAndSeconds } = timeFunctions;
+    const { minutes, seconds } = convertTimeToMinutesAndSeconds(time);
 
     this.setState({ minutes, seconds });
   }
@@ -126,26 +127,32 @@ class Countdown extends React.Component {
   }
 
   shortInterval() {
-    const time = 4 * 60;
+    const { getPreset } = timeFunctions;
+    const time = getPreset('Vamos rápido, já voltamos', 4 * 60);
 
     this.setState({ time, countdownIsActive: true });
   }
 
   regularInterval() {
-    const time = 6 * 60;
+    const { getPreset } = timeFunctions;
+    const time = getPreset('Voltamos em breve', 6 * 60);
 
     this.setState({ time, countdownIsActive: true });
   }
 
   longInterval() {
-    const time = 10 * 60;
+    const { getPreset } = timeFunctions;
+    const time = getPreset('Só alegria', 10 * 60);
 
     this.setState({ time, countdownIsActive: true });
   }
 
   randomInterval() {
-    const min = Math.ceil(30);
-    const max = Math.floor(180);
+    const { getPreset } = timeFunctions;
+    const shortestTime = getPreset('Vamos rápido, já voltamos', 4 * 60);
+    const longestTime = getPreset('Só alegria', 10 * 60);
+    const min = Math.ceil(shortestTime);
+    const max = Math.floor(longestTime);
     const time = Math.floor(Math.random() * (max - min + 1) + min);
 
     this.setState({ time, countdownIsActive: true });
