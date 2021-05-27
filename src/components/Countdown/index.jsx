@@ -1,7 +1,14 @@
 import React from 'react';
 import './styles.scss';
 
-import { MdCancel } from 'react-icons/md';
+import {
+  MdCasino,
+  MdDirectionsRun,
+  MdFreeBreakfast,
+  MdSentimentSatisfied,
+  MdTimer,
+  MdTimerOff
+} from 'react-icons/md';
 
 class Countdown extends React.Component {
   constructor() {
@@ -141,21 +148,36 @@ class Countdown extends React.Component {
         </div>
         { countdownIsActive ? (
           <button onClick={this.cancelCountdown}>
-            <MdCancel />
+            <MdTimerOff />
             Cancelar countdown
           </button>
         ) : (
           <>
             <form className="customInterval" onSubmit={this.customInterval}>
               <input type="text" value={temporaryTime} spellCheck={false} placeholder="Ex.: 3m 25s" onChange={this.handleInputTime} />
-              <button type="submit" disabled={startCountdownDisabled}>Iniciar countdown</button>
+              <button type="submit" disabled={startCountdownDisabled}>
+                <MdTimer />
+                Iniciar countdown
+              </button>
             </form>
       
             <div className="options">
-              <button onClick={this.shortInterval}>Vamos rápido, já voltamos</button>
-              <button onClick={this.regularInterval}>Voltamos em breve</button>
-              <button onClick={this.longInterval}>Só alegria</button>
-              <button onClick={this.randomInterval}>Aleatório</button>
+              <button onClick={this.shortInterval}>
+                <MdDirectionsRun />
+                Vamos rápido, já voltamos
+              </button>
+              <button onClick={this.regularInterval}>
+                <MdFreeBreakfast />
+                Voltamos em breve
+              </button>
+              <button onClick={this.longInterval}>
+                <MdSentimentSatisfied />
+                Só alegria
+              </button>
+              <button onClick={this.randomInterval}>
+                <MdCasino />
+                Aleatório
+              </button>
             </div>
           </>
         ) }

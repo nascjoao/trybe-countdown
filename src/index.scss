@@ -6,18 +6,6 @@
   --dark-green: #0e6d45;
 }
 
-@keyframes denial {
-  0% {
-    transform: translateX(0);
-  } 25% {
-    transform: translateX(-2%) rotate(-.5deg);
-  } 75% {
-    transform: translateX(2%) rotate(.5deg);
-  } 100% {
-    transform: translateX(0);
-  }
-}
-
 @keyframes scaleIn {
   from {
     transform: scale(0);
@@ -47,12 +35,12 @@ button {
   font-weight: bold;
   transition: .1s;
   padding: .625rem 1.25rem;
-
+  
   svg {
     font-size: 1.375rem;
     margin-right: .5rem;
   }
-
+  
   &:hover {
     transform: scale(1.05);
   }

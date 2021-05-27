@@ -74,23 +74,31 @@
       color: var(--dark-green);
       flex: 1;
       font-size: 1.1875rem;
-      outline-color: var(--green);
+      outline-color: var(--dark-green);
       outline-offset: -1px;
       padding: 0 1.25rem;
       height: 100%;
+
+      &:focus ~ button {
+        border-radius: 5px;
+      }
     }
 
     button {
       border-radius: 0 5px 5px 0;
-
+      
+      &:hover {
+        border-radius: 5px;
+      }
+      
       &:disabled {
         cursor: not-allowed;
         filter: saturate(.3);
         opacity: .5;
       }
-
+      
       &:disabled:hover {
-        animation: denial .1s .5s forwards;
+        border-radius: 0 5px 5px 0;
         transform: scale(1);
       }
     }
