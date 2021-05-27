@@ -44,7 +44,10 @@ class Countdown extends React.Component {
     if (prevState.time !== this.state.time) {
       this.setMinutesAndSeconds();
       if (this.state.time > 0) this.startCountdown();
-      else this.setState({ countdownIsActive: false, countdownEnd: true });
+      else if (!this.state.countdownCanceled) {
+        this.setState({ countdownIsActive: false, countdownEnd: true });
+        new Audio('notification.mp3').play();
+      }
     }
   }
 
