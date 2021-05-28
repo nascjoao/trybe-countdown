@@ -31,6 +31,19 @@
   margin: 0;
   padding: 0;
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media screen and (max-width: 630px) {
+  html {
+    font-size: .9375rem;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  html {
+    font-size: .875rem;
+  }
 }
 
 #App {
@@ -50,8 +63,9 @@ button {
   display: inline-flex;
   font-size: .875rem;
   font-weight: bold;
-  transition: .1s;
+  justify-content: center;
   padding: .625rem 1.25rem;
+  transition: .1s;
   
   svg {
     font-size: 1.375rem;

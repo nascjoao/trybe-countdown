@@ -16,5 +16,12 @@
       margin: 0;
       height: 5rem;
     }
+
+    @media screen and (max-width: 508px) {
+      & {
+        grid-template-columns: auto;
+        grid-template-rows: auto auto;
+      }
+    }
   }
 }
