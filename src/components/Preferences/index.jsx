@@ -21,16 +21,16 @@ class Preferences extends React.Component {
         </header>
         <main>
           <h1>Preferências</h1>
-          <h3>Padrões de tempo</h3>
+          <h2>Padrões de tempo</h2>
           <div id="presets">
             <TimePreset label="Vamos rápido, já voltamos" />
             <TimePreset label="Voltamos em breve" />
             <TimePreset label="Só alegria" />
           </div>
-          <h3>
+          <h2>
             <MdInfoOutline />
             Aleatório
-          </h3>
+          </h2>
           <p>
             A opção de countdown aleatório cria um intervalo entre o seu mais curto
             e mais longo padrão, ou seja, seus padrões de &quot;Vamos rápido, já voltamos&quot; e

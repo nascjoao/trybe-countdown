@@ -79,3 +79,58 @@ button {
     margin: 0;
   }
 }
+
+label, p {
+  font-size: 1.14rem;
+}
+
+p {
+  line-height: 1.7;
+
+  & + p {
+    margin-top: 1rem;
+  }
+
+  a {
+    align-items: center;
+    background: var(--green);
+    border-radius: 3px;
+    color: var(--background-secondary);
+    display: inline-flex;
+    padding: 0 .3rem;
+
+    & + a {
+      margin-left: .5rem;
+    }
+
+    svg {
+      margin-right: .3rem;
+    }
+  }
+}
+
+header {
+  background: var(--background-secondary);
+  padding: 1.5625rem;
+
+  a {
+    color: var(--text);
+  }
+}
+
+main {
+  padding: 4rem;
+  
+  h2 {
+    align-items: center;
+    border-bottom: 1px solid var(--green);
+    display: flex;
+    margin-bottom: 2rem;
+    margin-top: 4rem;
+    padding-bottom: 1rem;
+
+    svg {
+      margin-right: .9375rem;
+    }
+  }
+}
