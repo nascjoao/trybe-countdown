@@ -29,15 +29,19 @@ export default class TimePreset extends Component {
   }
 
   handleInputTime({ target }) {
-    const { convertCustomTimeToSeconds, setPreset } = timeFunctions;
+    const {
+      convertCustomTimeToSeconds,
+      setPreset,
+      validateCustomTimeInput,
+    } = timeFunctions;
     const temporaryTime = target.value;
     const { name: nameInState } = this.state;
     const { label } = this.props;
     const name = nameInState || label;
 
-    const timePattern = /^([1-5][0-9]|[1-9])m\s([1-5][0-9]|[1-9])+s$|^([1-5][0-9]|[1-9])(m|s)$/g;
+    const isValid = validateCustomTimeInput(temporaryTime);
 
-    if (temporaryTime.match(timePattern)) {
+    if (isValid) {
       const time = convertCustomTimeToSeconds(temporaryTime);
       this.setState({ isValueValid: true });
       setPreset(name, time);

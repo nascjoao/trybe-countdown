@@ -61,13 +61,13 @@ class Countdown extends React.Component {
   }
 
   handleInputTime({ target }) {
-    const temporaryTime = target.value;
-                         
-    const timePattern = /^(([1-9]|[1-5][0-9])m\s?)?(([1-9]|[1-5][0-9])s)?$/;
+    const { validateCustomTimeInput } = timeFunctions;
+
+    const isValid = validateCustomTimeInput(target.value);
 
     this.setState({
       temporaryTime: target.value,
-      startCountdownDisabled: !temporaryTime.match(timePattern),
+      startCountdownDisabled: !isValid,
     });
   }
 
