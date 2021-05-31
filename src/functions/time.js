@@ -83,9 +83,16 @@ function convertCustomTimeToSeconds(temporaryTime) {
   return seconds;
 }
 
+function validateCustomTimeInput(timeToValidate) {
+  const timePattern = /^([1-5][0-9]|[1-9])m\s([1-5][0-9]|[1-9])s$|^([1-5][0-9]|[1-9])(m|s)$/;
+
+  return timeToValidate.match(timePattern);
+}
+
 export default {
   getPreset,
   convertTimeToMinutesAndSeconds,
   setPreset,
   convertCustomTimeToSeconds,
+  validateCustomTimeInput,
 };
