@@ -148,3 +148,68 @@ main {
     }
   }
 }
+
+@keyframes slideUp {
+  from {
+    transform: translateY(200%);
+  } to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(0);
+  } to {
+    transform: translateY(200%);
+  }
+}
+
+.alertOldDomain {
+  transform: translateY(200%);
+  position: fixed;
+  bottom: 0;
+  z-index: 2;
+  background-color: #00000090;
+  color: white;
+  padding: 2rem;
+  width: 100%;
+  animation: slideUp 0.5s forwards 1s;
+}
+
+.alertOldDomain.hide {
+  animation: slideDown 0.5s forwards;
+}
+
+.alertOldDomainContainer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+label.understood-old-domain {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.alertOldDomainOptions {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.alertOldDomainOptions a {
+  background: var(--green);
+  border-radius: 3px;
+  color: var(--background-secondary);
+  display: inline-flex;
+  padding: 0.3rem 0.7rem;
+  font-size: 1.14rem;
+  font-weight: bold;
+}
+
+input#understood-old-domain {
+  width: 2rem;
+  height: 2rem;
+}

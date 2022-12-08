@@ -11,7 +11,11 @@ class App extends React.Component {
 
     this.state = {
       theme: '',
+      removeAlertOldDomain: false,
+      understoodOldDomain: false,
     };
+
+    this.oldDomain = window.location.hostname.match(/(\D+\.)?localhost/g);
 
     this.changeTheme = this.changeTheme.bind(this);
   }
@@ -45,9 +49,37 @@ class App extends React.Component {
   }
 
   render() {
-    const { theme } = this.state;
+    const { theme, understoodOldDomain, removeAlertOldDomain } = this.state;
     return (
       <div id="App" data-theme={theme}>
+        { (this.oldDomain && !removeAlertOldDomain) && (
+          <div className={`alertOldDomain ${understoodOldDomain ? 'hide' : 'show'}`}>
+            <div className="alertOldDomainContainer">
+              <p>
+                Parece que você veio pelo domínio <strong>joaonasc.dev</strong>. Em breve esse domínio deixará de existir!
+                <br />
+                A boa notícia é que você ainda terá acesso ao site pelo domínio <strong>nasc.dev</strong> (que é muito mais legal 😄).
+                Por isso, da próxima vez, acesse <a href={`https://${window.location.hostname.replace(/joaonasc/g, 'nasc')}`}><strong>{window.location.hostname.replace(/joaonasc/g, 'nasc')}</strong></a> para garantir que continuará tendo acesso.
+              </p>
+              <div className="alertOldDomainOptions">
+                <a href={`https://${window.location.hostname.replace(/joaonasc/g, 'nasc')}`}>Me leve para lá! 🚀</a>
+                <label htmlFor="understood-old-domain" className="understood-old-domain">
+                  <input
+                    type="checkbox"
+                    id="understood-old-domain"
+                    onChange={({ target: { checked } }) => {
+                      this.setState({ ...this.state, understoodOldDomain: checked });
+                      setTimeout(() => {
+                        this.setState({ ...this.state, removeAlertOldDomain: true });
+                      }, 1000);
+                    }}
+                  />
+                  Entendi, vou ficar por aqui.
+                </label>
+              </div>
+            </div>
+          </div>
+        ) }
         <Switch>
           <Route path="/about" component={About} />
           <Route path="/settings" component={Preferences} />
