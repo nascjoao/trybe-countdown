@@ -15,7 +15,7 @@ class App extends React.Component {
       understoodOldDomain: false,
     };
 
-    this.oldDomain = window.location.hostname.match(/(\D+\.)?localhost/g);
+    this.oldDomain = window.location.hostname.match(/(\D+\.)?joaonasc\.dev/g);
 
     this.changeTheme = this.changeTheme.bind(this);
   }
